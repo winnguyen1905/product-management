@@ -5,13 +5,16 @@ block main
    .container.my-3
       .row
          .col-12
-               +box-head("Danh sach san pham")
-      row.col-4.mb-3
-         .product-item
-               .inner-image
-                  img(src="https://i.dummyjson.com/data/products/1/thumbnail.jpg", alt="")
-         .inner-content
-               h3.inner-title iphone 9
-               .inner-price-new 80$
-               .inner-price-old 100$
-               .inner-discount -20%
+            .titlePage
+               +box-head(pageTitle)
+      .row
+         each item, index in products
+            .col-4.mb-3
+               .product-item
+                     .inner-image
+                        img(src=item.thumbnail, alt=item.title)
+               .inner-content
+                     h3.inner-title #{item.title}
+                     .inner-price-new #{item.newPrice}$
+                     .inner-price-old #{item.price}$
+                     .inner-discount #{item.discountPercentage}%

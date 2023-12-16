@@ -31,9 +31,11 @@
     border: 1px solid #ddd;
     margin: 10px;
     padding: 10px;
+    max-width: 150px;
+    max-height: 300px;
   }
   
-  /* Phần hình ảnh bên trong sản phẩm */
+  /* Phần hình ảnh5 bên trong sản phẩm */
   .product-item .inner-image {
     margin-right: 10px;
   }
@@ -48,24 +50,33 @@
     flex-grow: 1; /* Phần nội dung chiếm toàn bộ phần còn lại của sản phẩm */
   }
   
-  .product-item .inner-title {
-    font-size: 1.2em;
+    .inner-title {
+    font-size: 20px;
     margin-bottom: 5px;
   }
   
-  .product-item .inner-price-new {
+  .inner-price-new {
     color: green;
     font-weight: bold;
   }
   
-  .product-item .inner-price-old {
+  .inner-price-old {
     color: #999;
     text-decoration: line-through;
     margin-right: 10px;
   }
   
-  .product-item .inner-discount {
-    color: red;
+  .inner-content .inner-discount {
+    color: rgb(255, 0, 0);
     font-weight: bold;
+  }
+  .inner-price-old {
+    color: #999; /* Set the color to a muted or grayish tone */
+    text-decoration: line-through; /* Apply a strikethrough effect */
+    margin-right: 10px;
+  }
+  .titlePage {
+    color: green;
+    font-size: 80px;
   }
   
