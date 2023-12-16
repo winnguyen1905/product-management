@@ -1,3 +1,71 @@
-.test {
-    
+.header {
+    border-bottom: 1px solid black;
+    padding: 10px;
 }
+.header .inner-logo img {
+    max-height: 50px;
+}
+.header .inner-menu > ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    flex-wrap: wrap;
+}
+
+.header .inner-menu > ul > li {
+    margin-left: 20px;
+}
+
+.footer {
+    background: black;
+    color: azure;
+    text-align: center;
+    padding: 10px;
+}
+/* end footer */
+
+/* Các kiểu chung cho sản phẩm */
+.product-item {
+    display: flex;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  /* Phần hình ảnh bên trong sản phẩm */
+  .product-item .inner-image {
+    margin-right: 10px;
+  }
+  
+  .product-item .inner-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Phần nội dung bên trong sản phẩm */
+  .product-item .inner-content {
+    flex-grow: 1; /* Phần nội dung chiếm toàn bộ phần còn lại của sản phẩm */
+  }
+  
+  .product-item .inner-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  .product-item .inner-price-new {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .product-item .inner-price-old {
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 10px;
+  }
+  
+  .product-item .inner-discount {
+    color: red;
+    font-weight: bold;
+  }
+  
