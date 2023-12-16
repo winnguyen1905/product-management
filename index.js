@@ -20,6 +20,11 @@ const routeAdmin = require("./routes/admin/index.route");
 app.set("views", "./views");
 app.set('view engine', "pug");
 
+// nhung systemconfig
+const systemConfig = require("./config/system");
+// App local variables
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
 // khai bao public la thu muc tinh la public
 app.use(express.static("public"));
 
