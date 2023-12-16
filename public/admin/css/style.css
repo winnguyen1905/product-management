@@ -1,6 +1,7 @@
 .header {
     background: rgb(16, 2, 36);
     padding: 10px 0;
+    width: 100%;
     position: sticky;
     top: 0;
     z-index: 999;
