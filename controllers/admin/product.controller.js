@@ -35,18 +35,25 @@ module.exports.index = async (req, res) => {
 
     // query criteria
     let find = {
-        deleted : false
+        //deleted : false
     };
 
+    // variables
+    let keyword = "";
     // add parameter into query criteria 
     if(req.query.status)
         find.status = req.query.status;
-
+    if(req.query.keyword) {
+        keyword = req.query.keyword;
+        const regexp = new RegExp(keyword, "i");
+        find.title = regexp;
+    }
     // Dig into database by model and render pug file
     const products = await Product.find(find);
     res.render("admin/pages/products/index", {
         pageTitle : "Product Admin",
         products : products,
-        filter : filters
+        filter : filters,
+        keyword : keyword
     });
 };

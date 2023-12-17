@@ -25,13 +25,16 @@ if(buttonStatus.length > 0) {
 const formSearch = document.querySelector("#form-search");
 if(formSearch) {
     formSearch.addEventListener("submit", (event) => {
+        event.preventDefault();
         let url = new URL(window.location.href);
         const keyword = event.target.elements.keyword.value;
         if(keyword) {
             url.searchParams.set("keyword", keyword);
-            window.location.href = url.href;
-        } else url.searchParams.delete("keyword");
-        event.preventDefault();
+        } else {
+            url.searchParams.delete("keyword");
+            alert("Please enter keyword");
+        }
+        window.location.href = url.href;
         // console.log();
-    })
-}
+    });
+};
