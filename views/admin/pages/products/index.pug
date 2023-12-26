@@ -1,79 +1,108 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 block main
+    .marleft
+        .fixed-title
+            h1 #{pageTitle}
+        
+        .card.mb-3
+            .card-header Filter And Search
+            .card-body
+                .smart-bar 
+                    .row
+                        .col-6
+                            +filter-status(filterStatus)
+                        .col-6.mb-2
+                            +search(keyword)
 
-    .fixed-title
-        h1 #{pageTitle}
-    
-    .card.mb-3 
-        .card-header Filter And Search
-        .card-body
-            .row
-                .col-6
-                    each item, index in filter
-                        button(class=`btn btn-sm ml-1 btn-outline-success ${item.class}` button-status=item.status
-                        ) #{item.name}
-                .col-6.mb-2
-                    form(action="" id="form-search")
-                        .input-group 
-                            input(
-                                type="text"
-                                placeholder="Enter Your Keywords"
-                                name="keyword"
-                                class="form-control"
-                                value=keyword
-                            )
-                            .input-group-append
-                                button(
-                                    class="btn btn-success"
-                                    type="submit"
-                                ) Search
+        .card.mb-3
+            .card-header List Option Status
+                .card-body
+                    +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, listIdChangeStatus)
 
 
-            table.table.table-hover.table-sm
-                thead
-                    tr
-                        th STT
-                        th Image
-                        th Title
-                        th Price
-                        th Status
-                        th Action
-                tbody
-                    each item, index in products
+                table.checkbox-multi.table.table-hover.table-sm
+                    thead
                         tr
-                            td #{index + 1}
-                            td
-                                img(src=item.thumbnail, alt="SP1" width="100px" height="auto")
-                            td #{item.title}
-                            td #{item.price}$
-                            td 
-                                if(item.status == "active") 
-                                    a(href="#" class="badge badge-success") #{item.status}
-                                else 
-                                    a(href="#" class="badge badge-danger") #{item.status} 
-                            td 
-                                button(class="btn btn-warning btn-sm") Edit
-                                button(class="btn btn-danger btn-sm ml-1") Delete
-                    //- tr
-                    //-     td 1
-                    //-     td
-                    //-         img(src="/images/ip15.jpg", alt="SP1" width="100px" height="auto")
-                    //-     td IP 15 Pro Max 5G
-                    //-     td 100$
-                    //-     td 
-                    //-         a(href="#" class="badge badge-danger") Inactive 
-                    //-     td 
-                    //-         button(class="btn btn-warning btn-sm") Edit
-                    //-         button(class="btn btn-danger btn-sm ml-1") Delete
-                    //- tr
-                    //-     td 1
-                    //-     td
-                    //-         img(src="/images/ip15.jpg", alt="SP1" width="100px" height="auto")
-                    //-     td IP 15 Pro Max 5G
-                    //-     td 100$
-                    //-     td 
-                    //-         a(href="#" class="badge badge-success") Active 
-                    //-     td 
-                    //-         button(class="btn btn-warning btn-sm") Edit
-                    //-         button(class="btn btn-danger btn-sm ml-1") Delete
+                            th 
+                                input(
+                                    type="checkbox" 
+                                    name="checkall" 
+                                    check-all 
+                                    class="check-box"
+                                )
+                            th STT
+                            th Image
+                            th Title
+                            th Price
+                            th Position
+                            th Status
+                            th Action
+                    tbody
+                        each item, index in products
+                            tr
+                                td
+                                    input(
+                                        type="checkbox" 
+                                        name="id" 
+                                        value = item.id 
+                                        check-single
+                                        class="check-box"
+                                    )
+                                td #{index + 1 + (objectPag.currentPage - 1)*objectPag.limititems}
+                                td
+                                    img(src=item.thumbnail, alt="SP1" width="100px" height="auto")
+                                td #{item.title}
+                                td #{item.price}$
+                                td 
+                                    input(
+                                        type="number"
+                                        value=item.position
+                                        style="width: 60px"
+                                        min="1"
+                                        name="position"
+                                    )
+                                td 
+                                    if(item.status == "active") 
+                                        a(href="javascript:;" 
+                                        class="badge badge-success" 
+                                        data-status=item.status
+                                        data-id=item.id
+                                        button-change-status
+                                        ) #{item.status}
+                                    else 
+                                        a(href="javascript:;" 
+                                        class="badge badge-danger"
+                                        data-status=item.status
+                                        data-id=item.id
+                                        button-change-status
+                                        ) #{item.status} 
+                                td 
+                                    button(class="btn btn-warning btn-sm") Edit
+                                    button(
+                                        class=`btn ${item.deleted ? "btn-secondary" : "btn-info"} btn-sm ml-1`
+                                        data-id=item.id
+                                        button-delete
+                                        delete-status=`${item.deleted}`
+                                    ) #{item.deleted == true ? "Deleted" : "Delete"}
+        +pagination(objectPag)
+
+
+        form(
+            action=""
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/products/change-status`
+        )
+
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/products/delete-item`
+        )
+
+        script(src="/admin/js/product.js")

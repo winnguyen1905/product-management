@@ -1,13 +1,23 @@
-.header {
+header {
     background: rgb(16, 2, 36);
     padding: 10px 0;
     width: 100%;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 999;
 }
-
-.header .iiner-logo a {
+@media (max-width: 767px) {
+    header{
+        display: none;
+    }
+    header form{
+        display: none;
+    }
+    header .button-header{
+        display: none;
+    }
+}
+.header .inner-logo a {
     font-size: 24px;
     font-weight: 700;
     color: aliceblue;
@@ -15,14 +25,19 @@
 
 .body .sider {
     width: 150px;
-    background: #323232;
+    height: 100%;
+    background: #3a3939;
     color: white;
-    height: calc(100vh - 56px);
     position: fixed;
-    top: 56px;
+    top: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
 }
-
+.body .sider .inner-menu {
+    font-size: 17px;
+    margin-top: 100px;
+}
 .body .main {
     margin: 15px;
     position: relative;
@@ -41,4 +56,38 @@
     display: block;
     padding: 6px 10px; 
     border-bottom: 1px solid #3f3b3b;
+}
+
+.pagination .page-item .page-link {
+    box-shadow: none;
+}
+.pagination .page-item .page-link:hover {
+    background: rgb(56, 184, 235);
+    color: black;
+}
+.pagination .input-pagination {
+    transition: all 0.3s ease;
+}
+.pagination .input-pagination:hover {
+    background: white;
+    transform: translateX(10px);
+}
+
+.pagination .input-pagination .page-link{
+    transition: all 0.3s ease;
+    cursor: text;
+}
+
+.pagination .input-pagination .page-link:hover {
+    background: white;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+.check-box:hover {
+    background-color: aqua;
+}
+
+/* sidebar */
+.marleft {
+    margin-top: 100px;
 }

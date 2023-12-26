@@ -1,0 +1,31 @@
+mixin form-change-multi(path, listIdChangeStatus)
+    form(
+        action=path
+        method="POST"
+        form-change-multi
+    )
+        .d-flex.align-items-start
+            .form-group
+                select(name="type" class="form-control" id="select-change-status")
+                    option(disabled selected) -- Choose Action -- 
+                    option(value="active") Kích Hoạt
+                    option(value="inactive") Hủy Kích Hoạt
+                    option(value="deleted") Delete All
+                    option(value="delete") Restore All
+                    option(value="change-position") Change Position
+                
+
+            .form-group.ml-sm-1
+                input(
+                    placeholder="Range for Development !"
+                    id="list-id-products"
+                    type="text"
+                    name="ids"
+                    value=listIdChangeStatus
+                    class="form-control"
+                    list-id-products
+                )
+            .ml-md-1
+                button(type="submit" class="btn btn-success" ) Apply
+            .ml-md-1
+                button(type="button" class="btn btn-primary" clear-list-id) Clear
