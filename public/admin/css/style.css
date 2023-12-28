@@ -22,9 +22,11 @@ header {
     font-weight: 700;
     color: aliceblue;
 }
-
+.body {
+    position: relative;
+}
 .body .sider {
-    width: 150px;
+    width: 125px;
     height: 100%;
     background: #3a3939;
     color: white;
@@ -39,8 +41,8 @@ header {
     margin-top: 100px;
 }
 .body .main {
-    margin: 15px;
-    position: relative;
+    top: 0px;
+    position: absolute;
     left: 150px;
     width: calc(100% - 180px);
 }
@@ -91,3 +93,75 @@ header {
 .marleft {
     margin-top: 100px;
 }
+/* -------------------------------  */
+  .appear-from-right {
+    position: fixed; 
+    padding: 15px;
+    z-index: 9999999999;
+    right: 15px;
+    top: 15px;
+  }
+  
+  .appear-from-right.show {
+    display: none;
+  }
+  .button-cancel {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    border: none;
+    background: none;
+    box-shadow: none;
+    cursor: pointer;
+  }
+  
+  .form-control {
+    border: none;
+    box-shadow: none;
+  }
+  .form-control div {
+    /* margin: 10px 0; */
+  }
+  .form-control input {
+    border: 1px solid #897979;
+  }
+  .form-control lable {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 3px;
+    margin-right: 2px;
+    color: #016b0a;
+
+  }
+  .form-control textarea {
+    border: 1px solid #897979;
+  }
+  input[type="radio"] {
+    appearance: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid #999;
+    transition: 0.2s all linear;
+    margin-right: 5px;
+  
+    position: relative;
+    top: 4px;
+  }
+  
+  input[type="radio"]:checked {
+    border: 6px solid rgb(22, 175, 235);
+  }
+
+  .a-none {
+    color: white;
+    text-decoration: none;
+  }
+  .a-none:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  /* .none-img-button img[src=""] {
+    display: none;
+  } */

@@ -1,0 +1,132 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+
+block main
+    +alert-error("7000")
+    +alert-success("7000")
+    .mt-sm-5.pt-5.ml-md-1.mb-md-3.pl-md-1
+        .row.col-12
+            h2 #{pageTitle}
+    form(
+        action=`${prefixAdmin}/products/create`
+        id="form-create-products"
+        method="POST"
+        enctype="multipart/form-data"
+    )
+        div(class="form-control")
+            lable(for="title") Title (Product name)
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                required
+            )
+        div(class="form-control")
+            lable(for="desc") Description (Details about feature uses)
+            textarea(
+                class="form-control"
+                id="desc"
+                name="description"
+                rows="5"
+            )
+        div(class="form-control")
+            lable(for="brand") Brand (Example: VSmart, Apple, Sony, Huawei, Samsung, ...)
+            input(
+                type="text"
+                class="form-control"
+                id="brand"
+                name="brand"
+            )
+        div(class="form-control")
+            lable(for="price") Price
+            input(
+                type="number"
+                class="form-control"
+                id="price"
+                name="price"
+                value="0"
+                min="0"
+            )
+        div(class="form-control")
+            lable(for="discount") Discount %
+            input(
+                type="number"
+                class="form-control"
+                id="discount"
+                name="discountPercentage"
+                value="0"
+                min="0"
+                max="100"
+            )
+        div(class="form-control")
+            lable(for="thumbnail") Thumbnail (File/Link, Please Click On Button To Toggle Option !)
+            .mb-md-2.mt-md-2
+                button(type="button" class="btn btn-success" button-toggle-option-image) Populate Image Link
+            div(input-change )
+                input(
+                input-image-upload
+                type="text"
+                class="form-control-file"
+                id="thumbnail"
+                name="thumbnail"
+            )
+            .col-md-12.text-center.m-md-2
+                div(preview-image-upload class="none-img-button")
+                    img(src="" style="width: 50%; height: auto;")
+        div(class="form-control")
+            lable(for="stock") Stock
+            input(
+                type="number"
+                class="form-control"
+                id="stock"
+                name="stock"
+                value="0"
+                min="0"
+            )
+        div(class="form-control")
+            lable(for="position") Position
+            input(
+                placeholder="Automatically Increase"
+                type="number"
+                class="form-control"
+                id="position"
+                name="position"
+                min="0"
+            )
+            .row.mt-md-3.mb-md-3
+                .col-md-4
+                    div(class="form-control form-check form-check-inline")
+                        input(
+                            type="radio"
+                            class="form-check-input"
+                            id="statusActive"
+                            name="status"
+                            value="active"
+                            checked
+                        )
+                        lable(for="statusActive") Active
+                .col-md-8
+                    div(class="form-control form-check form-check-inline")
+                        input(
+                            type="radio"
+                            class="form-check-input"
+                            id="statusInActive"
+                            name="status"
+                            value="inactive"
+                        )
+                        lable(for="statusInActive") In-Active
+
+        .ml-md-2
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-success btn-lg btn-block"
+                ) Create New
+
+
+    script(src="/admin/js/product.js")
+    script(src="/admin/js/createProduct.js")
+
+    

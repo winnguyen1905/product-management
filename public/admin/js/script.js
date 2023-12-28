@@ -182,14 +182,15 @@
             const typeChange = e.target.elements.type.value;
 
             let confirmChange = false;
-            const arrayReq = ["--Choose Action--", "active", "inactive", "delete", "deleted", "change-position"];
+            const arrayReq = ["--Choose Action--", "active", "inactive", "restore", "delete", "change-position", "hard-delete"];
             const arrayAct = [
                 `MÀY LÀ GAY ĐÚNG HÔK ???`,
                 () => confirm("Are you sure to change ACTIVE status of products ?"),
                 () => confirm("Are you sure to change INACTIVE status of products ?"),
+                () => confirm("Are you sure to change RESTORE status of products ?"),
                 () => confirm("Are you sure to change DELETE status of products ?"),
-                () => confirm("Are you sure to change DELETED status of products ?"),
-                () => confirm("Are you sure to change POSITION of products ?")
+                () => confirm("Are you sure to change POSITION of products ?"),
+                () => confirm("Are you sure to HARD DELETE (FOREVER) of products ?")
             ]
             const indexOfReq = arrayReq.indexOf(typeChange);
             if (indexOfReq > 0) confirmChange = arrayAct[indexOfReq]();
@@ -200,7 +201,6 @@
             
             // const position = checkboxSingle.closest("tr").querySelector(`input[name="position"]`);
             // console.log(position);
-
             if (confirmChange) formChangeMulti.submit();
         });
 
@@ -210,22 +210,26 @@
         clearButton.addEventListener("click", (e) => {
             let url = new URL(window.location.href);
             url.searchParams.delete("list_id_change_status");
+            url.searchParams.delete("keyword");
             window.location.href = url.href;
         }
     );
-    
-
 
     
-
-
-
+    
     
 
 
 
 
 
+
+
+
+
+
+
+    
 
 
 //pagination 
@@ -247,5 +251,29 @@
             });
         });
     }
+// end pagination
+
+
+
+
+
+
+// NAVIGATE TO EDIT PRODUCT PAGE
+const buttonEdit = document.querySelectorAll("[button-edit]");
+let form_edit_item = document.querySelector("#edit-item-page");
+if(buttonEdit) {
+    buttonEdit.forEach((button) => {
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            const path = form_edit_item.getAttribute("data-path");
+            const id = button.getAttribute("data-id");
+            const action = path + `/${id}?_method=GET`;
+            form_edit_item.action = action;
+            form_edit_item.submit();
+        })
+    })
+}
+
+
 
 

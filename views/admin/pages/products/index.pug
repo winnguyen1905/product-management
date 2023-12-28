@@ -3,7 +3,10 @@ include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
 block main
+    +alert-success("7000")
+    +alert-error("7000")
     .marleft
         .fixed-title
             h1 #{pageTitle}
@@ -17,12 +20,17 @@ block main
                             +filter-status(filterStatus)
                         .col-6.mb-2
                             +search(keyword)
+        
 
         .card.mb-3
             .card-header List Option Status
                 .card-body
-                    +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, listIdChangeStatus)
-
+                    .row
+                        .col-md-9
+                            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, listIdChangeStatus)
+                        .col-md-3
+                            button(type="button" class="btn btn-danger" style="background-color: #F72D93") 
+                                a(href=`${prefixAdmin}/products/create` class="a-none" style="color: white;") Add New Product
 
                 table.checkbox-multi.table.table-hover.table-sm
                     thead
@@ -81,7 +89,7 @@ block main
                                         button-change-status
                                         ) #{item.status} 
                                 td 
-                                    button(class="btn btn-warning btn-sm") Edit
+                                    button(class="btn btn-warning btn-sm" data-id=item.id button-edit) Edit
                                     button(
                                         class=`btn ${item.deleted ? "btn-secondary" : "btn-info"} btn-sm ml-1`
                                         data-id=item.id
@@ -105,4 +113,12 @@ block main
             data-path=`${prefixAdmin}/products/delete-item`
         )
 
+        form(
+            action=""
+            method="GET"
+            id="edit-item-page"
+            data-path=`${prefixAdmin}/products/edit`
+        )
+
         script(src="/admin/js/product.js")
+        script(src="/admin/js/script.js")

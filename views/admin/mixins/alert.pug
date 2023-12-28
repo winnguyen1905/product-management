@@ -1,0 +1,27 @@
+mixin alert-success(time)
+    -if(messages.success)
+        .message.info
+        div(class="alert alert-success appear-from-right show" role="alert" data-time=time show-alert)
+            .row
+                .col-md-8
+                    h4(class="alert-heading") Success !
+                .col-md-4
+                    div
+                        button(class="button-cancel") __[X]__
+            p  #{messages.success}
+            hr
+            p(class="mb-0") Complete Success
+
+mixin alert-error(time)
+    -if(messages.error)
+        .message.info
+        div(class="alert alert-danger appear-from-right show" role="alert" data-time=time show-alert)
+            .row
+                .col-md-8
+                    h4(class="alert-danger") Error !
+                .col-md-4
+                    div
+                        button(class="button-cancel") __[X]__
+            p  #{messages.error}
+            hr
+            p(class="mb-0") Error Happen
