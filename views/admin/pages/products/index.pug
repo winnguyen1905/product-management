@@ -89,6 +89,7 @@ block main
                                         button-change-status
                                         ) #{item.status} 
                                 td 
+                                    a(href=`${prefixAdmin}/products/detail/${item.id}` class="btn btn-danger btn-sm inactive mr-md-1" role="button" aria-pressed="true") Detail
                                     button(class="btn btn-warning btn-sm" data-id=item.id button-edit) Edit
                                     button(
                                         class=`btn ${item.deleted ? "btn-secondary" : "btn-info"} btn-sm ml-1`

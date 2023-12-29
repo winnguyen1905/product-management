@@ -283,6 +283,17 @@ const systemConfig = require("../../config/system");
             req.flash("error", "Cannot update product");
             console.error("err");
         }
-
         res.redirect("back");
     };
+
+// [GET] admin/products/detail/:id
+    module.exports.detail = async (req, res) => {
+        const id = req.params.id;
+        const [product] = await Product.find({
+            _id: id
+        })
+        res.render("admin/pages/products/detail",  {
+            pageTitle: "Product Details",
+            product: product
+        });
+    }

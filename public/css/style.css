@@ -79,5 +79,34 @@
     color: green;
     font-size: 80px;
   }
-  
+  a:hover {
+    box-shadow: none;
+    border: none;
+  }
+
+    /* Product detail */
+    .inner-wrap {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      font-size: 20px;
+      width: 100%;
+    }
+    .inner-image {
+      width: 50%;
+    }
+    .inner-image img{
+      width: 50%;
+      height: auto;
+    }
+    .inner-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+    .inner-content .inner-brand {
+      color: rgb(8, 174, 8);
+      font-weight: 600;
+    }
   

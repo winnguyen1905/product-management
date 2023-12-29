@@ -1,18 +1,8 @@
-# Ignore node_modules directory
+# Dependency directories
 node_modules/
 
-# Ignore .env files
+# Optional npm cache directory
+.npm
+
+# dotenv environment variables file
 .env
-
-# Ignore log files
-*.log
-
-# Ignore compiled files
-*.class
-*.jar
-
-# Ignore backup files
-*.bak
-
-# Ignore a specific directory and its contents
-secret-data/
