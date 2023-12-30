@@ -53,6 +53,9 @@ const systemConfig = require("../../config/system");
             const [sortkey, sortCriteria] = req.query.sortCriteria.split("-");
             sortObject[sortkey] = sortCriteria;
         }
+        const array1 = ['position-desc', 'position-asc', 'price-desc', 'price-asc', 'title-desc', 'title-asc'];
+        const array2 = ['Vị trí giảm dần', 'Vị trí tăng dần', 'Giá giảm dần', 'Giá tăng dần', 'Tên giảm dần', 'Tên tăng dần'];
+        const sortCriteria = array2[array1.indexOf(req.query.sortCriteria)];
 
         // Dig into database by model and render pug file
         const products = await Product.find(find)
@@ -68,7 +71,8 @@ const systemConfig = require("../../config/system");
             filterStatus : filterStatus,
             keyword : keyword,
             objectPag : objectPagination,
-            listIdChangeStatus : listIdChangeStatus
+            listIdChangeStatus : listIdChangeStatus,
+            sortCriteria : sortCriteria
         });
     };
 
