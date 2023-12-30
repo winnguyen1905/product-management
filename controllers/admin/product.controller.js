@@ -204,31 +204,31 @@ const systemConfig = require("../../config/system");
         return result ? result.position : 0;
     }
     module.exports.createPost = async (req, res) => {
-        const object = {};
-        console.log(req.body);
-        console.log(req.body.position);
-        // if no send position
-        if(!req.body.position) {
-            const newPosition = await findMaxPosition() + 1;
-            object.position = newPosition;
-        }
-        
-        // if send file
-        if(req.file) {
-            console.log("Was Send File");
-            const image = `/uploads/${req.file.filename}`;
-            object.thumbnail = image;
-        }
-
-        req.body = {...req.body, ...object};
         try {
+            const object = {};
+            console.log(req.body);
+            console.log("1");
+            // if no send position
+            if(!req.body.position) {
+                const newPosition = await findMaxPosition() + 1;
+                req.body.position = newPosition;
+            }
+            
+            console.log("2");
+            
             const newProduct = new Product(req.body);
             newProduct.save();
+            console.log("3");
+            console.log(newProduct.thumbnail);
+
+
+            req.flash("success", "create product success");
+            res.render("admin/pages/products/success");
         } catch (error) {
             console.error(err);
+            req.flash("error", "cannot create product");
+            res.redirect("back");
         }
-        req.flash("success", "create product success");
-        res.render("admin/pages/products/success");
     };
 
 
