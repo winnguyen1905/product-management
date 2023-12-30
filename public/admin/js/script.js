@@ -251,6 +251,16 @@
             });
         });
     }
+
+    const inputPagination = document.querySelector(".input-pagination");
+    if(inputPagination) {
+        inputPagination.addEventListener("change", (e) => {
+            let url = new URL(window.location.href);
+            const input = inputPagination.querySelector("input");
+            url.searchParams.set("page",input.value >= 1 ? input.value : 1);
+            window.location.href = url.href;
+        })
+    }
 // end pagination
 
 
@@ -271,6 +281,18 @@ if(buttonEdit) {
             form_edit_item.action = action;
             form_edit_item.submit();
         })
+    })
+}
+
+
+// sort key
+const sortSelect = document.querySelector("[sort-select]");
+if(sortSelect) {
+    sortSelect.addEventListener("change", () => {
+        let url = new URL(window.location.href);
+        const sortCriteria = sortSelect.value;
+        url.searchParams.set("sortCriteria", sortCriteria);
+        window.location.href = url.href;
     })
 }
 

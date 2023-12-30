@@ -11,14 +11,15 @@ block main
         .fixed-title
             h1 #{pageTitle}
         
-        .card.mb-3
+        .card.mb-1
             .card-header Filter And Search
             .card-body
                 .smart-bar 
                     .row
-                        .col-6
+                        .col-md-6
                             +filter-status(filterStatus)
-                        .col-6.mb-2
+                        
+                        .col-md-6.mb-3
                             +search(keyword)
         
 
@@ -26,12 +27,20 @@ block main
             .card-header List Option Status
                 .card-body
                     .row
-                        .col-md-9
+                        .col-md-3
+                            select(name="sort" class="form-control" id="sort-select" sort-select style="border: 1px solid #ddd")
+                                option(selected disabled) Choose Sort Option
+                                option(value="position-desc") Position Up
+                                option(value="position-asc") Position Down
+                                option(value="price-asc") Price Up
+                                option(value="price-desc") Price Down
+                                option(value="title-asc") A - Z
+                                option(value="title-desc") Z - A
+                        .col-md-6
                             +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, listIdChangeStatus)
                         .col-md-3
                             button(type="button" class="btn btn-danger" style="background-color: #F72D93") 
                                 a(href=`${prefixAdmin}/products/create` class="a-none" style="color: white;") Add New Product
-
                 table.checkbox-multi.table.table-hover.table-sm
                     thead
                         tr
@@ -98,7 +107,6 @@ block main
                                         delete-status=`${item.deleted}`
                                     ) #{item.deleted == true ? "Deleted" : "Delete"}
         +pagination(objectPag)
-
 
         form(
             action=""

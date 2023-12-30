@@ -15,9 +15,11 @@ const systemConfig = require("../../config/system");
         let find = {
             // deleted : false
         };
+
         // search object
         const objectSearch = searchHelper(req.query);
         find = {...find, ...objectSearch};
+
         // variables
         const keyword = req.query.keyword; 
 
@@ -25,9 +27,11 @@ const systemConfig = require("../../config/system");
         if(req.query.status){
             find.status = req.query.status;
         }
+
         // checkbox
         let listIdChangeStatus = "";
         if(req.query.list_id_change_status) listIdChangeStatus = req.query.list_id_change_status;
+
         // pagination
         const countProducts = await Product.countDocuments(find);
         let objectPagination = {
@@ -43,11 +47,18 @@ const systemConfig = require("../../config/system");
         //     product.save();
         // })
 
+        //sort criteria
+        let sortObject = {};
+        if(req.query.sortCriteria) {
+            const [sortkey, sortCriteria] = req.query.sortCriteria.split("-");
+            sortObject[sortkey] = sortCriteria;
+        }
+
         // Dig into database by model and render pug file
         const products = await Product.find(find)
-            .sort({
-                position : "asc"
-            })
+            .sort(
+                sortObject
+            )
             .limit(objectPagination.limititems)
             .skip(objectPagination.skip);
         
@@ -206,20 +217,15 @@ const systemConfig = require("../../config/system");
     module.exports.createPost = async (req, res) => {
         try {
             const object = {};
-            console.log(req.body);
-            console.log("1");
             // if no send position
             if(!req.body.position) {
                 const newPosition = await findMaxPosition() + 1;
                 req.body.position = newPosition;
             }
             
-            console.log("2");
             
             const newProduct = new Product(req.body);
             newProduct.save();
-            console.log("3");
-            console.log(newProduct.thumbnail);
 
 
             req.flash("success", "create product success");
@@ -265,12 +271,6 @@ const systemConfig = require("../../config/system");
         })
 
         // if send file
-        if(req.file) {
-            console.log("Was Send File");
-            const image = `/uploads/${req.file.filename}`;
-            productEdit.thumbnail = image;
-        }
-        
         product = {...product, ...productEdit};
 
         try {
@@ -279,11 +279,12 @@ const systemConfig = require("../../config/system");
                 { $set: product }
             )
             req.flash("success", "update product success");
+            res.redirect("back");
         } catch (error) {
             req.flash("error", "Cannot update product");
             console.error("err");
+            res.redirect("back");
         }
-        res.redirect("back");
     };
 
 // [GET] admin/products/detail/:id

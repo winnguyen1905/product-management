@@ -6,16 +6,16 @@ mixin form-change-multi(path, listIdChangeStatus)
     )
         .d-flex.align-items-start
             .form-group
-                select(name="type" class="form-control" id="select-change-status" style="border: 1px solid #ddd")
-                    option(disabled selected) -- Apply For All -- 
-                    option(value="active") Kích Hoạt
-                    option(value="inactive") Hủy Kích Hoạt
-                    option(value="delete") Delete
-                    option(value="restore") Restore
-                    option(value="change-position") Apply Change Position
-                    option(value="hard-delete") Hard Delete
-                
-
+                .d-flex.flex-row
+                    select(name="type" class="form-control" id="select-change-status" style="border: 1px solid #ddd")
+                        option(disabled selected) -- Apply For All -- 
+                        option(value="active") Kích Hoạt
+                        option(value="inactive") Hủy Kích Hoạt
+                        option(value="delete") Delete
+                        option(value="restore") Restore
+                        option(value="change-position") Apply Change Position
+                        option(value="hard-delete") Hard Delete
+                    
             .form-group.ml-sm-1
                 input(
                     placeholder="Range for Development !"

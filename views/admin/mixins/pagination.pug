@@ -1,43 +1,44 @@
 mixin pagination(objectPag)
-    nav 
-        ul(class="pagination")
-            if(objectPag.totalPage)
-                li(class="page-item")
-                        button(class="page-link" button-pagination = 1) Start
-            if (objectPag.currentPage > 1)
-                li(class="page-item")
-                    button(class="page-link" button-pagination=objectPag.currentPage - 1) Previous
-            if (objectPag.currentPage > 2 && objectPag.totalPage > 3)        
-                li(class="page-item")
-                    button(class="page-link") ...
+    nav
+            ul(class="pagination")
+                if(objectPag.totalPage)
+                    li(class="page-item")
+                            button(class="page-link" button-pagination = 1) Start
+                if (objectPag.currentPage > 1)
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objectPag.currentPage - 1) Previous
+                if (objectPag.currentPage > 2 && objectPag.totalPage > 3)        
+                    li(class="page-item")
+                        button(class="page-link") ...
 
 
 
 
 
 
-            -for(let i= Math.max(objectPag.currentPage == objectPag.totalPage ? objectPag.totalPage - 2 : objectPag.currentPage - 1, 1) ; i <= Math.min(objectPag.currentPage == 1 ? 3 : objectPag.currentPage + 1, objectPag.totalPage) ; i++)
-                    li(class=`page-item ${objectPag.currentPage == i ? "active" : ""}` )
-                        button(
-                            class="page-link"
-                            button-pagination=i
-                        ) #{i}
-            
-            
+                -for(let i= Math.max(objectPag.currentPage == objectPag.totalPage ? objectPag.totalPage - 2 : objectPag.currentPage - 1, 1) ; i <= Math.min(objectPag.currentPage == 1 ? 3 : objectPag.currentPage + 1, objectPag.totalPage) ; i++)
+                        li(class=`page-item ${objectPag.currentPage == i ? "active" : ""}` )
+                            button(
+                                class="page-link"
+                                button-pagination=i
+                            ) #{i}
+                
+                
 
 
 
 
 
-            
-            if (objectPag.currentPage < objectPag.totalPage-1 && objectPag.totalPage > 3) 
-                li(class="page-item")
-                    button(class="page-link") ...
-            if (objectPag.currentPage < objectPag.totalPage) 
-                li(class="page-item")
-                    button(class="page-link" button-pagination=objectPag.currentPage + 1) Next
-            if(objectPag.totalPage)
-                li(class="page-item")
-                    button(class="page-link" button-pagination=objectPag.totalPage) End
-            li(class="input-pagination page-item")
-                input(class="page-link" type="text" placeholder="Enter page number")
+                
+                if (objectPag.currentPage < objectPag.totalPage-1 && objectPag.totalPage > 3) 
+                    li(class="page-item")
+                        button(class="page-link") ...
+                if (objectPag.currentPage < objectPag.totalPage) 
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objectPag.currentPage + 1) Next
+                if(objectPag.totalPage)
+                    li(class="page-item")
+                        button(class="page-link" button-pagination=objectPag.totalPage) End
+                .ml-md-2
+                    li(class=`input-pagination page-item ${objectPag.totalPage >= 1 ? "d-block" : "d-none"}`)
+                        input(class="page-link" type="text" placeholder=`Go Page Number (<=${objectPag.totalPage})`)

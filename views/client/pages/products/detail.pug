@@ -2,7 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 
 block main 
-    .container.mt-md-5.pt-md-5
+    .container.mt-md-5.p-md-5
         .row
             .inner-wrap
                 .col-md-6.inner-image
@@ -11,12 +11,12 @@ block main
                         .inner-title
                             h2 #{product.title}
                         .row.ml-md-1
-                            b  Brand from:
-                            .inner-brand.ml-md-2
+                            b(class="mr-md-2")  Brand:
+                            .inner-brand.ml-md-0
                                 div #{ product.brand ? product.brand : "   unknown" }
-                        .inner-desc.ml-md-1
+                        .inner-desc.ml-md-0
                             i #{product.description}  
-                .col-md-12.m-md-5.d-flex.flex-row.text-center
+                .col-md-12.m-md-5.d-flex.flex-row.justify-content-around
                     <button type="button" class="btn btn-outline-primary btn-lg m-md-1"> Final Price #{product.price}$</button>
                     <button type="button" class="btn btn-outline-secondary btn-lg m-md-1"> Discount #{product.discountPercentage}%</button>
                     <button type="button" class="btn btn-outline-success btn-lg m-md-1"> Stock #{product.stock}</button>

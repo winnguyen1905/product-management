@@ -2,7 +2,7 @@
 // Upload image LINK or FILE
     const buttonOptionPostImage = document.querySelector("[button-toggle-option-image]");
     const isShowPreview = document.querySelector("div[preview-image-upload]");
-    let imagePreview = isShowPreview.querySelector("img");
+    let imagePreview = isShowPreview ? isShowPreview.querySelector("img") : document.querySelector("div[preview-image-upload] img");;
 
     let imageText = document.querySelector("[input-image-text]");onChangeOfInputText();
     let imageUpload = document.querySelector("[input-image-upload]");
