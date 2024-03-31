@@ -173,29 +173,29 @@ const systemConfig = require("../../config/system");
 
 // [DELETE] /admin/products/delete-item/:delete-status/:id
     module.exports.deleteItem = async (req, res) => {
-
         const id = req.params.id;
         const isDelete = req.params.delete_status === "true" ? true : false;
         try {
-            await Product.findOneAndUpdate(
+            await Product.updateOne(
                 { _id: id },
                 { $set: {
                     deleted : isDelete,
                     changeDeleteStatus: new Date(),
-                    deleteBy: {
-                        user_id: req.locals.user.id,
-                        deletedAt: new Date()
-                    }
+                    // deletedBy: {
+                    //     user_id: req.locals.user.id,
+                    //     deletedAt: new Date()
+                    // },
                 } }
             );
             req.flash('success', `Update status to ${isDelete ? "Delete" : "Restore"} for 1 product`);
             res.redirect("back");    
         } catch (error) {
             console.error(error);
-            res.status(500).send('Internal Server Error');
+            // res.status(500).send('Internal Server Error');
             req.flash('error', `cannot Update status to ${isDelete ? "Delete" : "Restore"} for 1 product`);
             res.redirect("back");
         }
+        // res.send("OK");
     };
 
 

@@ -40,7 +40,7 @@ router.patch(
 );
 
 router.post(
-    '/upload', 
+    '/upload',
     upload.single('file'),
     uploadCloud.uploadImageCloud
 );
