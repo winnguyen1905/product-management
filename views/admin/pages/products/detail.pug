@@ -7,7 +7,7 @@ block main
     +alert-error("7000")
     
 
-    .container.mt-md-5.p-md-5
+    .container-fluid.mt-md-5.p-md-5
         .row
             .inner-wrap
                 .col-md-6.inner-image
@@ -20,7 +20,7 @@ block main
                             .inner-brand.ml-md-0
                                 div #{ product.brand ? product.brand : "   unknown" }
                         .inner-desc.ml-md-1
-                            i #{product.description}
+                            i !{product.description}
                         .row.ml-md-1
                             b(class="mr-md-2")  Slug:
                             .inner-brand.ml-md-0

@@ -5,16 +5,16 @@ include ../../mixins/alert.pug
 block main
     +alert-success("7000")
     +alert-error("7000")
-    .mt-sm-5.pt-5.ml-md-1.mb-md-3.pl-md-1
+    .left-1
         .row
             .col-md-9
                 h2 #{pageTitle}
             .col-md-3
                 a(href=`${prefixAdmin}/products/detail/${product.id}` class="btn btn-danger btn-sm mr-md-1" role="button" aria-pressed="true") Go To Detail
-                a(href=`${prefixAdmin}/products?keyword=${product.title}` class="btn btn-info btn-sm mr-md-1" role="button" aria-pressed="true") Go To Product
+                a(href=`${prefixAdmin}/products?id_search=${product.id}` class="btn btn-info btn-sm mr-md-1" role="button" aria-pressed="true") Go To Product
             .col-md-12
                 form(
-                    action=`${prefixAdmin}/products/edit/${product.id}`
+                    action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
                     id="form-edit-product"
                     method="POST"
                     enctype="multipart/form-data"
@@ -23,7 +23,7 @@ block main
                         lable(for="title") Title (Product name)
                         input(
                             type="text"
-                            class="form-control"
+                            class="form-control "
                             id="title"
                             name="title"
                             required
@@ -32,7 +32,7 @@ block main
                     div(class="form-control")
                         lable(for="desc") Description (Details about feature uses)
                         textarea(
-                            class="form-control"
+                            class="form-control textarea-mce"
                             id="desc"
                             name="description"
                             rows="5"

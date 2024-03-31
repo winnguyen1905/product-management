@@ -6,6 +6,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
+var path = require('path');
 
 // khoi tao App
 const app = express();
@@ -13,8 +14,8 @@ const port = process.env.PORT;
 
 // body-parser
 var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false })); // Get by FROM CRUD
+app.use(bodyParser.json()) // app/json
 
 // database and connect
 const database = require("./config/database");
@@ -45,6 +46,9 @@ app.use(express.static(`${__dirname}/public`));
 // method override
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
+
+//TinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // goi router va truyen paramaster
 route(app);

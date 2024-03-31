@@ -103,7 +103,7 @@
     .inner-content {
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: start;
     }
     .inner-content .inner-brand {
       color: rgb(8, 174, 8);

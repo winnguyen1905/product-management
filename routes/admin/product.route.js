@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router(); 
 
 const multer = require('multer');
-
-
-
 const upload = multer(); //{ storage : storageMulter(multer) }
 
 const validate = require('../../validates/admin/product.validate');
+
 const controller = require("../../controllers/admin/product.controller");
 
 const uploadCloud = require('../../middlewares/admin/uploadCloud.middleware');
@@ -21,6 +19,8 @@ router.patch("/change-multi", controller.changeMulti);
 router.delete("/delete-item/:delete_status/:id", controller.deleteItem);
 
 router.get("/create", controller.create);
+
+
 
 router.post(
     "/create",
@@ -42,5 +42,12 @@ router.patch(
 
 router.get("/detail/:id", controller.detail);
 
-module.exports = router;
+router.post(
+    '/upload',
+    upload.single('file'),
+    uploadCloud.uploadImageCloud
+);
+  
 
+module.exports = router;
+  

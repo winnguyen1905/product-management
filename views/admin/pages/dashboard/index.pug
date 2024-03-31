@@ -1,4 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
 
 block main
+    +alert-success("7000")
+    +alert-error("7000")
     h1 #{pageTitle}
+
+    script(src="/admin/js/showAlert.js")

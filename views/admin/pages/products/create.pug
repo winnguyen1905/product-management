@@ -5,9 +5,8 @@ include ../../mixins/alert.pug
 block main
     +alert-error("7000")
     +alert-success("7000")
-    .mt-sm-5.pt-5.ml-md-1.mb-md-3.pl-md-1
-        .row.col-12
-            h2 #{pageTitle}
+    .left-1
+        h2 #{pageTitle}
     form(
         action=`${prefixAdmin}/products/create`
         id="form-create-products"
@@ -26,8 +25,8 @@ block main
         div(class="form-control")
             lable(for="desc") Description (Details about feature uses)
             textarea(
-                class="form-control"
-                id="desc"
+                class="form-control textarea-mce"
+                id="description"
                 name="description"
                 rows="5"
             )
@@ -70,7 +69,9 @@ block main
                 type="text"
                 class="form-control-file"
                 id="thumbnail"
+                placeholder="Your Image Link"
                 name="thumbnail"
+                style="padding: 7px; border-radius: 5px"
             )
             .col-md-12.text-center.m-md-2
                 div(preview-image-upload class="none-img-button")

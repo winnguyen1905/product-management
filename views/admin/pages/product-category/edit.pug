@@ -1,0 +1,110 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-parent.pug
+
+block main
+    +alert-success("7000")
+    +alert-error("7000")
+    .left-1
+        .row
+            .col-md-9
+                h2 #{pageTitle}
+            .col-md-3
+                a(href=`${prefixAdmin}/product-category/detail/${category.id}` class="btn btn-danger btn-sm mr-md-1" role="button" aria-pressed="true") Go To Detail
+                a(href=`${prefixAdmin}/product-category?id_search=${category.id}` class="btn btn-info btn-sm mr-md-1" role="button" aria-pressed="true") Go To Category
+            .col-md-12
+                form(
+                    action=`${prefixAdmin}/product-category/edit/${category.id}?_method=PATCH`
+                    id="form-edit-category"
+                    method="POST"
+                    enctype="multipart/form-data"
+                )
+                    div(class="form-control")
+                        lable(for="title") Title (Category name)
+                        input(
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            name="title"
+                            required
+                            value=`${category.title}`
+                        )
+                    div(class="form-control d-flex flex-column")
+                        lable(for="parent_id") Parent Category
+                        select(name="parent_id" id="parent_id")
+                            option(value="") Default Option
+                            +select-parent(newRecords)
+
+                    div(class="form-control")
+                        lable(for="desc") Description (Details about feature uses)
+                        textarea(
+                            class="form-control textarea-mce"
+                            id="desc"
+                            name="description"
+                            rows="5"
+                        ) #{category.description}
+                    
+                    div(class="form-control")
+                        lable(for="thumbnail") Thumbnail (File/Link, Please Click On Button To Toggle Option !)
+                        .mb-md-2.mt-md-2
+                            button(type="button" class="btn btn-success" button-toggle-option-image) Populate Image Link
+                        div(input-change)
+                            input(
+                            input-image-upload
+                            type="text"
+                            class="form-control-file"
+                            id="thumbnail"
+                            name="thumbnail"
+                            value=category.thumbnail
+                        )
+                        .col-md-12.text-center.m-md-2
+                            div(preview-image-upload)
+                                img(src=category.thumbnail style="width: 50%; height: auto;")
+                    
+                    div(class="form-control")
+                        lable(for="position") Position
+                        input(
+                            placeholder="Automatically Increase"
+                            type="number"
+                            class="form-control"
+                            id="position"
+                            name="position"
+                            min="0"
+                            value=category.position
+                        )
+                        .row.mt-md-3.mb-md-3
+                            .col-md-4
+                                div(class="form-control form-check form-check-inline")
+                                    input(
+                                        type="radio"
+                                        class="form-check-input"
+                                        id="statusActive"
+                                        name="status"
+                                        value="active"
+                                        checked= category.status == "active" ? true : false
+                                    )
+                                    lable(for="statusActive") Active
+                            .col-md-8
+                                div(class="form-control form-check form-check-inline")
+                                    input(
+                                        type="radio"
+                                        class="form-check-input"
+                                        id="statusInActive"
+                                        name="status"
+                                        value="inactive"
+                                        checked= category.status == "inactive" ? true : false
+                                    )
+                                    lable(for="statusInActive") In-Active
+
+                    .ml-md-2
+                        div(class="form-group")
+                            button(
+                                type="submit"
+                                class="btn btn-success btn-lg btn-block"
+                            ) Apply Edit
+
+
+    script(src="/admin/js/product.js")
+    script(src="/admin/js/createProduct.js")
+
+    

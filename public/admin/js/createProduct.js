@@ -21,11 +21,11 @@
             
             if(buttonOptionPostImage.innerHTML == "Upload Image File") {
                 buttonOptionPostImage.innerHTML = "Populate Image Link";
-                inputChange.innerHTML = '<input type="text" input-image-text class="form-control-file" id="thumbnail" name="thumbnail" style="padding: 5px; border: 1px solid #28A745";>';
+                inputChange.innerHTML = '<input type="text" placeholder="Your Image Link" input-image-text class="form-control-file" id="thumbnail" name="thumbnail" style="padding: 7px; border-radius: 5px">';
                 imageText = document.querySelector("[input-image-text]");
             } else {
                 buttonOptionPostImage.innerHTML = "Upload Image File";
-                inputChange.innerHTML = '<input type="file" input-image-upload class="form-control-file" id="thumbnail" name="thumbnail" accept="image/*">';
+                inputChange.innerHTML = '<input type="file" input-image-upload class="form-control-file" style="padding: 4px; border-radius: 5px" id="thumbnail" name="thumbnail" accept="image/*">';
                 imageUpload = document.querySelector("[input-image-upload]"); // because input file was be delete, therefore we need to get again input file
             }
             onChangeOfInputText();
@@ -54,7 +54,6 @@
         }
         function onChangeOfInputText() {
             if(imageText) {
-                console.log(imageText);
                 imageText.addEventListener("input", (e) => {
                     imagePreview.src = imageText.value;
                 })
@@ -63,11 +62,3 @@
 
 
 //-----------------------------------------------------------------EDIT PAGE-----------------------------------------------------------
-const form_edit_product = document.querySelector("#form-edit-product");
-if(form_edit_product) {
-    form_edit_product.addEventListener("submit", (e) => {
-        e.preventDefault();
-        form_edit_product.action = window.location.pathname + "?_method=PATCH";
-        form_edit_product.submit();
-    });
-}

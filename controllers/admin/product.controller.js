@@ -17,7 +17,9 @@ const systemConfig = require("../../config/system");
         };
 
         // search object
-        const objectSearch = searchHelper(req.query);
+        let objectSearch = {};
+        console.log(req);
+        objectSearch = searchHelper(req.query);
         find = {...find, ...objectSearch};
 
         // variables
@@ -53,10 +55,6 @@ const systemConfig = require("../../config/system");
             const [sortkey, sortCriteria] = req.query.sortCriteria.split("-");
             sortObject[sortkey] = sortCriteria;
         }
-        const array1 = ['position-desc', 'position-asc', 'price-desc', 'price-asc', 'title-desc', 'title-asc'];
-        const array2 = ['Vị trí giảm dần', 'Vị trí tăng dần', 'Giá giảm dần', 'Giá tăng dần', 'Tên giảm dần', 'Tên tăng dần'];
-        const sortCriteria = array2[array1.indexOf(req.query.sortCriteria)];
-
         // Dig into database by model and render pug file
         const products = await Product.find(find)
             .sort(
@@ -72,7 +70,6 @@ const systemConfig = require("../../config/system");
             keyword : keyword,
             objectPag : objectPagination,
             listIdChangeStatus : listIdChangeStatus,
-            sortCriteria : sortCriteria
         });
     };
 
@@ -84,22 +81,20 @@ const systemConfig = require("../../config/system");
     module.exports.changeStatus = async (req, res) => {
         const status = req.params.status;
         const id = req.params.id;
-        req.flash('success', `Update status to ${status} for 1 product`);
         try {
         // Update the product
             await Product.findOneAndUpdate(
                 { _id: id },
                 { $set: { status: status} }
             );
-        
-        // Redirect to the product page
-            const referer = req.get('Referer');
-            res.redirect("back");
-            // res.redirect("back");
+            req.flash('success', `Update status to ${status} for 1 product`);
         } catch (error) {
             console.error(error);
+            req.flash('error', `cannot Update status to ${status} for 1 product`);
             res.status(500).send('Internal Server Error');
         }
+        console.log(req.flash());
+        res.redirect("back");
     }
 
 
@@ -115,10 +110,7 @@ const systemConfig = require("../../config/system");
         const objectStatus = {};
         let timeNow = new Date();
         timeNow.setTime(timeNow.getTime());
-        let ids = stringId.split(' - ');ids.pop();
-
-        req.flash('success', `Update status to ${status} for ${ids.length} products`);
-        
+        let ids = stringId.split(' - ');ids.pop();        
         
         try {
             for(let item of ids) {
@@ -166,11 +158,12 @@ const systemConfig = require("../../config/system");
                 { _id: { $in: ids } },
                 { $set: objectStatus }
             );
-            const referer = req.get('Referer');
+            req.flash('success', `Update status to ${status} for ${ids.length} products`);
             res.redirect("back");
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
+            req.flash('error', `Update status to ${status} for ${ids.length} products failed`);
             res.redirect("back");
         }
     }
@@ -183,23 +176,26 @@ const systemConfig = require("../../config/system");
 
         const id = req.params.id;
         const isDelete = req.params.delete_status === "true" ? true : false;
-        req.flash('success', `Update status to ${isDelete ? "Delete" : "Restore"} for 1 product`);
         try {
             await Product.findOneAndUpdate(
                 { _id: id },
                 { $set: {
                     deleted : isDelete,
-                    changeDeleteStatus: new Date()
+                    changeDeleteStatus: new Date(),
+                    deleteBy: {
+                        user_id: req.locals.user.id,
+                        deletedAt: new Date()
+                    }
                 } }
             );
-            
+            req.flash('success', `Update status to ${isDelete ? "Delete" : "Restore"} for 1 product`);
+            res.redirect("back");    
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
+            req.flash('error', `cannot Update status to ${isDelete ? "Delete" : "Restore"} for 1 product`);
             res.redirect("back");
         }
-        const referer = req.get('Referer');
-        res.redirect("back");
     };
 
 
@@ -227,9 +223,12 @@ const systemConfig = require("../../config/system");
                 req.body.position = newPosition;
             }
             
+            req.body.createdBy = {
+                user_id: res.locals.user.id
+            };
             
             const newProduct = new Product(req.body);
-            newProduct.save();
+            await newProduct.save();
 
 
             req.flash("success", "create product success");

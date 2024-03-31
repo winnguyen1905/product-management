@@ -1,0 +1,43 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+block main
+    
+    +alert-success("7000")
+    +alert-error("7000")
+    .card
+        .card-header.text-center
+            .text-danger
+                h2 LOGIN
+        .card-body
+            form(
+                action=`${prefixAdmin}/auth/login`
+                id="form-login"
+                method="POST"
+            )
+                div(class="form-control")
+                    lable(for="email" class="text-danger") Email
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        required
+                    )
+                div(class="form-control")
+                    lable(for="password" class="text-danger") Password
+                    input(
+                        class="form-control"
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    )
+                div(class="form-group text-center")
+                    button(
+                        type="submit"
+                        class="btn btn-success btn-lg"
+                    ) Login
+        .card-footer.text-muted
+            h3 If you haven't account, you can contact to admin with phone number +8493473766
+    script(src="/admin/js/showAlert.js") 

@@ -4,12 +4,13 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+
 block main
     +alert-success("7000")
     +alert-error("7000")
-    .marleft
-        .fixed-title
-            h1 #{pageTitle}
+    .left-1
+        h2 #{pageTitle}
         
         .card.mb-1
             .card-header Filter And Search
@@ -25,63 +26,58 @@ block main
 
         .card.mb-3
             .card-header List Option Status
-                .card-body
-                    .row
-                        .col-md-2
-                            select(name="sort" class="form-control" id="sort-select" sort-select style="border: 1px solid #228D3A")
-                                option(selected) #{sortCriteria}
-                                option(value="position-desc") Position Up
-                                option(value="position-asc") Position Down
-                                option(value="price-asc") Price Up
-                                option(value="price-desc") Price Down
-                                option(value="title-asc") A - Z
-                                option(value="title-desc") Z - A
-                        .col-md-7
-                            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, listIdChangeStatus)
+            .card-body
+                .row
+                    .col-md-3
+                        +sort()
+                    .col-md-6
+                        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`, listIdChangeStatus)
+                    if(role.permissions.includes("products_create"))
                         .col-md-3
-                            button(type="button" class="btn btn-danger" style="background-color: #F72D93") 
-                                a(href=`${prefixAdmin}/products/create` class="a-none" style="color: white;") Add New Product
-                table.checkbox-multi.table.table-hover.table-sm
-                    thead
+                            a(href=`${prefixAdmin}/products/create` class="btn btn-danger" style="color: white; background-color: #F72D93;") + Add New Product
+            table.checkbox-multi.table.table-hover.table-sm
+                thead
+                    tr
+                        th 
+                            input(
+                                type="checkbox" 
+                                name="checkall" 
+                                check-all 
+                                class="check-box"
+                            )
+                        th STT
+                        th Image
+                        th Title
+                        th Price
+                        th Position
+                        if(role.permissions.includes("products_edit"))
+                            th Status
+                        th Action
+                tbody
+                    each item, index in products
                         tr
-                            th 
+                            td
                                 input(
                                     type="checkbox" 
-                                    name="checkall" 
-                                    check-all 
+                                    name="id" 
+                                    value = item.id 
+                                    check-single
                                     class="check-box"
                                 )
-                            th STT
-                            th Image
-                            th Title
-                            th Price
-                            th Position
-                            th Status
-                            th Action
-                    tbody
-                        each item, index in products
-                            tr
-                                td
-                                    input(
-                                        type="checkbox" 
-                                        name="id" 
-                                        value = item.id 
-                                        check-single
-                                        class="check-box"
-                                    )
-                                td #{index + 1 + (objectPag.currentPage - 1)*objectPag.limititems}
-                                td
-                                    img(src=item.thumbnail, alt="SP1" width="100px" height="auto")
-                                td #{item.title}
-                                td #{item.price}$
-                                td 
-                                    input(
-                                        type="number"
-                                        value=item.position
-                                        style="width: 60px"
-                                        min="1"
-                                        name="position"
-                                    )
+                            td #{index + 1 + (objectPag.currentPage - 1)*objectPag.limititems}
+                            td
+                                img(src=item.thumbnail, alt="SP1" width="100px" height="auto")
+                            td #{item.title}
+                            td #{item.price}$
+                            td 
+                                input(
+                                    type="number"
+                                    value=item.position
+                                    style="width: 60px"
+                                    min="1"
+                                    name="position"
+                                )
+                            if(role.permissions.includes("products_edit"))
                                 td 
                                     if(item.status == "active") 
                                         a(href="javascript:;" 
@@ -97,15 +93,18 @@ block main
                                         data-id=item.id
                                         button-change-status
                                         ) #{item.status} 
-                                td 
+                            td 
+                                if(role.permissions.includes("products_view"))
                                     a(href=`${prefixAdmin}/products/detail/${item.id}` class="btn btn-danger btn-sm inactive mr-md-1" role="button" aria-pressed="true") Detail
+                                if(role.permissions.includes("products_edit"))
                                     button(class="btn btn-warning btn-sm" data-id=item.id button-edit) Edit
+                                if(role.permissions.includes("products_delete"))
                                     button(
-                                        class=`btn ${item.deleted ? "btn-secondary" : "btn-info"} btn-sm ml-1`
-                                        data-id=item.id
-                                        button-delete
-                                        delete-status=`${item.deleted}`
-                                    ) #{item.deleted == true ? "Deleted" : "Delete"}
+                                    class=`btn ${item.deleted ? "btn-secondary" : "btn-info"} btn-sm ml-1`
+                                    data-id=item.id
+                                    button-delete
+                                    delete-status=`${item.deleted}`
+                                ) #{item.deleted == true ? "Deleted" : "Delete"}
         +pagination(objectPag)
 
         form(

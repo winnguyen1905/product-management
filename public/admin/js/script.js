@@ -123,7 +123,7 @@
         isCheckedAll();
     }
 
-    function checkAndCheckedPerBox(checkbox) {
+    function checkOrUncheck(checkbox) {
         checkbox.addEventListener("click",(e) => {
             if(checkbox.checked) checked(checkbox); else unChecked(checkbox);
             // check all at per pag
@@ -137,35 +137,39 @@
                 
                 // check has checked on input field and stick on checkbox
                 checkedAfterLoad(checkbox);
-                checkAndCheckedPerBox(checkbox);
+                checkOrUncheck(checkbox);
  
             });
             // check all at per pag
             isCheckedAll();
         };
-    // CLICK CHECK ALL --(click and checked all)
+    // CLICK on input 'CHECK ALL' --(click and checked all)
         if(checkboxAll) {
             checkboxAll.addEventListener("click" , e => {
                 checkboxSingle.forEach((checkbox) => {
+                    
                     const position = checkbox.closest("tr").querySelector('input[name="position"]');
                     const idAtCheckbox = checkbox.value + '.' + position.value + ' - ';
+                    
                     if(checkboxAll.checked) {
                         checkbox.checked = true;
                         idProducts.value = idProducts.value + idAtCheckbox;
+                        // checked(checkbox);
                     }
                     else {
                         checkbox.checked = false;
-                        idProducts.value = "";
+                        idProducts.value = idProducts.value.replace(idAtCheckbox, "");
                     };
                 });
+                
             });
         };
 
     // POSITION INPUT
     if(positionAll.length) {
         positionAll.forEach((position, index) => {
+            const positionChange = document.querySelector(`#select-change-status option[value="change-position"]`);
             position.addEventListener("input", e => {
-                const positionChange = document.querySelector(`#select-change-status option[value="change-position"]`);
                 // console.log(positionChange);
                 positionChange.selected = true;
                 unChecked(checkboxSingle[index]);
@@ -199,8 +203,6 @@
                 return;
             }
             
-            // const position = checkboxSingle.closest("tr").querySelector(`input[name="position"]`);
-            // console.log(position);
             if (confirmChange) formChangeMulti.submit();
         });
 
@@ -218,12 +220,6 @@
     
     
     
-
-
-
-
-
-
 
 
 
@@ -288,14 +284,16 @@ if(buttonEdit) {
 // sort key
 const sortSelect = document.querySelector("[sort-select]");
 if(sortSelect) {
+    let url = new URL(window.location.href);
     sortSelect.addEventListener("change", () => {
-        let url = new URL(window.location.href);
-        const sortCriteria = sortSelect.value;
-        url.searchParams.set("sortCriteria", sortCriteria);
+        const sortKey = sortSelect.value;
+        url.searchParams.set("sortCriteria", sortKey);
         window.location.href = url.href;
     })
+    const sortKey = url.searchParams.get("sortCriteria");
+    if(sortKey) {
+        let sortOption = sortSelect.querySelector(`option[value='${sortKey}']`);
+        sortOption.selected = true;
+    }
 }
-
-
-
 

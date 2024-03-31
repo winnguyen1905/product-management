@@ -1,0 +1,81 @@
+extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
+include ../../mixins/sort.pug
+include ../../mixins/category-tree.pug
+
+
+block main
+    +alert-success("7000")
+    +alert-error("7000")
+    .left-1
+        h2 #{pageTitle}
+        
+        .card.mb-1
+            .card-header Filter And Search
+            .card-body
+                .smart-bar 
+                    .row
+                        .col-md-6
+                            +filter-status(filterStatus)
+                        .col-md-6.mb-3
+                            +search(keyword)
+        
+
+        .card.mb-3
+            .card-header List Option Status
+            .card-body
+                .row
+                    .col-md-3
+                        +sort()
+                    .col-md-6
+                        +form-change-multi(`${prefixAdmin}/product-category/change-multi?_method=PATCH`, listIdChangeStatus)
+                    .col-md-3
+                        button(type="button" class="btn btn-danger" style="background-color: #F72D93") 
+                            a(href=`${prefixAdmin}/product-category/create` class="a-none" style="color: white;") + Add New Category
+            table.checkbox-multi.table.table-hover.table-sm
+                thead
+                    tr
+                        th 
+                            input(
+                                type="checkbox" 
+                                name="checkall" 
+                                check-all 
+                                class="check-box"
+                            )
+                        th Level/Order
+                        th Image
+                        th Title
+                        th Position
+                        th Status
+                        th Action
+                tbody
+                    +category-tree(newRecords)
+        +pagination(objectPag)
+
+        form(
+            action=""
+            method="POST"
+            id="form-change-status"
+            data-path=`${prefixAdmin}/product-category/change-status`
+        )
+
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/product-category/delete-item`
+        )
+
+        form(
+            action=""
+            method="GET"
+            id="edit-item-page"
+            data-path=`${prefixAdmin}/products/edit`
+        )
+
+        script(src="/admin/js/product.js")
+        script(src="/admin/js/script.js")

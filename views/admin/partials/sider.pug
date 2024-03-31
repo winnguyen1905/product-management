@@ -1,9 +1,27 @@
 .sider
     .inner-menu
-        ul(style="font-size:20px;")  
+        ul  
             li
-                a(href=`${prefixAdmin}/dashboard`) Overview
+                a(href=`${prefixAdmin}/dashboard` class="btn btn-danger btn-lg m-md-1") Overview
+            if(role.permissions.includes("products_view"))
+                li 
+                    a(href=`${prefixAdmin}/products` class="btn btn-success active btn-lg m-md-1") All Product
+            if(role.permissions.includes("products_create"))
+                li 
+                    a(href=`${prefixAdmin}/products/create` class="btn btn-info active btn-lg m-md-1") New Product
+            if(role.permissions.includes("products-category_view"))
+                li 
+                    a(
+                        href=`${prefixAdmin}/product-category`
+                        class="btn btn-warning btn-lg m-md-1"
+                    ) Categories
+            if(role.permissions.includes("roles_view"))
+                li 
+                    a(href=`${prefixAdmin}/roles` class="btn btn-primary active btn-lg m-md-1") Role
+            if(role.permissions.includes("roles_division"))
+                li 
+                    a(href=`${prefixAdmin}/roles/permissions` style="background: #F72D93;" class="btn btn-primary active btn-lg m-md-1") Permissions
             li 
-                a(href=`${prefixAdmin}/products`) Product
-            li 
-                a(href=`${prefixAdmin}/products/create`) Add New
+                a(href=`${prefixAdmin}/account` class="btn btn-success active btn-lg m-md-1") Account List
+
+

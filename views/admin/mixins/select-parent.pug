@@ -1,0 +1,6 @@
+mixin select-parent(items, level = 1)
+    each item in items 
+        -const prefix = Array(level).join("----")
+        option(value=item._id selected=category ? category.parent_id == item.id ? true : false : false) #{prefix}#{item.title}
+            if item.children
+                +select-parent(item.children, level + 1)

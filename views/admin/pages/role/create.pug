@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert-error("7000")
+    +alert-success("7000")
+    .left-1
+        h2 #{pageTitle}
+    form(
+        action=`${prefixAdmin}/roles/create`
+        method="POST"
+    )
+        div(class="form-control")
+            lable(for="title") Title (Product name)
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                required
+            )
+        div(class="form-control")
+            lable(for="desc") Description (Details about feature uses)
+            input(
+                type="text"
+                class="form-control"
+                id="description"
+                name="description"
+                rows="5"
+            )
+        .ml-md-2
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-success btn-lg btn-block"
+                ) Create New
+
+    
+    script(src="/admin/js/showAlert.js") 
+    

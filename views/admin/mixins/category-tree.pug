@@ -1,0 +1,54 @@
+mixin category-tree(newRecords, parent = "", level = 1)
+    -const prefix = Array(level).join("-- ")
+    each item, index in newRecords
+        tr
+            td
+                input(
+                    type="checkbox" 
+                    name="id" 
+                    value = item.id 
+                    check-single
+                    class="check-box"
+                )
+            td #{level}/#{item.index}
+            td
+                img(src=item.thumbnail, alt="" width="100px" height="auto" )
+            td #{parent}#{item.title}
+            td 
+                input(
+                    type="number"
+                    value=item.position
+                    style="width: 60px"
+                    min="1"
+                    name="position"
+                )
+            if(role.permissions.includes("products-category_edit"))
+                td 
+                    if(item.status == "active") 
+                        a(href="javascript:;" 
+                        class="badge badge-success" 
+                        data-status=item.status
+                        data-id=item.id
+                        button-change-status
+                        ) #{item.status}
+                    else 
+                        a(href="javascript:;" 
+                        class="badge badge-danger"
+                        data-status=item.status
+                        data-id=item.id
+                        button-change-status
+                        ) #{item.status} 
+            td 
+                if(role.permissions.includes("products-category_view"))
+                    a(href=`${prefixAdmin}/products/detail/${item.id}` class="btn btn-danger btn-sm inactive mr-md-1" role="button" aria-pressed="true") Detail
+                if(role.permissions.includes("products-category_edit"))
+                    a(href=`${prefixAdmin}/product-category/edit/${item.id}` class="btn btn-warning btn-sm inactive mr-md-1" role="button" aria-pressed="true") Edit
+                if(role.permissions.includes("products-category_deleted"))
+                    button(
+                    class=`btn ${item.deleted ? "btn-secondary" : "btn-info"} btn-sm ml-1`
+                    data-id=item.id
+                    button-delete
+                    delete-status=`${item.deleted}`
+                ) #{item.deleted == true ? "Deleted" : "Delete"}
+        if item.children
+            +category-tree(item.children, parent + `${item.title}/`, level + 1)
