@@ -1,0 +1,3 @@
+# Product-Management
+## Describe
+Our web app is a robust tech product management platform designed for seamless sales and administration. Utilizing Node.js for server-side rendering (SSR), it adheres to the Model-View-Controller (MVC) architectural pattern, ensuring a clear separation of concerns and enhancing maintainability. The front-end is powered by Pug.js, enabling efficient and dynamic rendering of templates. At its core, the app is integrated with MongoDB, providing a scalable and flexible NoSQL database solution for managing extensive product data. This combination of technologies ensures a high-performance, responsive, and user-friendly interface for managing and selling tech products.
